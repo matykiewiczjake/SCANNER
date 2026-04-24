@@ -7,7 +7,7 @@ import {
   searchPairsByQuery,
   type DexPair,
 } from "@/lib/sources/dexscreener";
-import { countGreen, runPhase2Checks } from "@/lib/checks";
+import { countGreen, runChecks } from "@/lib/checks";
 
 const MAX_AGE_DAYS = 12;
 const MIN_MCAP = 500_000;
@@ -179,7 +179,7 @@ async function checkOne(
     source,
   });
 
-  const bundle = await runPhase2Checks({ mint, ticker, pair });
+  const bundle = await runChecks({ mint, ticker, pair });
   const greenCount = countGreen(bundle);
 
   const ageDays = pair.pairCreatedAt
@@ -203,6 +203,8 @@ async function checkOne(
       holdersDetails: bundle.holders.details,
       volumeStatus: bundle.volume.status,
       volumeDetails: bundle.volume.details,
+      whalesStatus: bundle.whales.status,
+      whalesDetails: bundle.whales.details,
       socialStatus: bundle.social.status,
       socialDetails: bundle.social.details,
       greenCount,

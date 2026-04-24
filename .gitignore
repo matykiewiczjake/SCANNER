@@ -11,3 +11,4 @@ build
 .DS_Store
 next-env.d.ts
 drizzle/meta
+tsconfig.tsbuildinfo

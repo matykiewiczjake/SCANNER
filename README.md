@@ -3,8 +3,20 @@
 Single-user, password-gated Solana memecoin scanner. Runs 8 free-tier checks per
 coin and ranks them by green-check count.
 
-**Status:** Phase 1 of 7 — scaffold only. See `SPEC.md` (top of the feature
-branch history) for the full plan.
+**Status:** Phase 3 of 7 — 5 checks live (rugcheck / holders / volume / whales
+/ social). See `screener-spec.md` for the full plan.
+
+### Phase 3 notes — whale check approximation
+
+Spec requires filtering whale wallets by hold duration (≥5m / ≥30m) and
+"first trade <2m ago". Birdeye `/defi/v2/tokens/top_traders` only returns
+aggregates over a time window (volumeBuy, volumeSell, trade counts) — no
+per-transaction timestamps. V1 approximates the hold-time criteria via
+"net buyer + net position ≥ $500 + trades ≤ 20". See `lib/checks/whales.ts`
+for details. V2 will add per-wallet transfer lookups for true hold-time.
+
+If your Birdeye tier gates this endpoint, check #4 returns UNKNOWN and the
+rest of the scan proceeds normally.
 
 ## Stack
 
@@ -43,7 +55,7 @@ node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 | `DASHBOARD_PASSWORD` | yes | Any string you pick |
 | `CRON_SECRET` | yes | Generate (see above) |
 | `HELIUS_API_KEY` | Phase 2 | helius.dev |
-| `BIRDEYE_API_KEY` | Phase 3 | birdeye.so |
+| `BIRDEYE_API_KEY` | Phase 3 | birdeye.so — check #4 returns UNKNOWN if `top_traders` is gated on your plan |
 | `LUNARCRUSH_API_KEY` | Phase 2 | lunarcrush.com (check #5 returns UNKNOWN without paid tier) |
 
 ## Deploy (Netlify)

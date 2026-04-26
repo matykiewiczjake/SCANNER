@@ -9,6 +9,9 @@ export default function HistoryPage() {
           <Link href="/" className="hover:text-foreground">
             Home
           </Link>
+          <Link href="/trending" className="hover:text-foreground">
+            Trending
+          </Link>
         </nav>
       </header>
 

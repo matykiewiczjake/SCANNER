@@ -37,6 +37,9 @@ export default async function HomePage() {
           Memecoin Scanner
         </h1>
         <nav className="flex items-center gap-4 text-sm text-muted-foreground">
+          <Link href="/trending" className="hover:text-foreground">
+            Trending
+          </Link>
           <Link href="/history" className="hover:text-foreground">
             History
           </Link>

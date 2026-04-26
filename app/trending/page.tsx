@@ -5,7 +5,10 @@ import { formatRelative } from "@/lib/format";
 const TOP_N = 5;
 const REVALIDATE_SECONDS = 12 * 60 * 60;
 
-export const revalidate = REVALIDATE_SECONDS;
+// Dynamic at the route level (matches / and /history) but the upstream
+// LunarCrush call is still cached for 12h via fetch's `next.revalidate`.
+// Avoids build-time prerender hitting LunarCrush on every Netlify deploy.
+export const dynamic = "force-dynamic";
 
 function compactNumber(n: number | null): string {
   if (n == null) return "—";

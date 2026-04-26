@@ -179,7 +179,7 @@ async function checkOne(
     source,
   });
 
-  const bundle = await runChecks({ mint, ticker, pair });
+  const { bundle, labels } = await runChecks({ mint, ticker, pair });
   const greenCount = countGreen(bundle);
 
   const ageDays = pair.pairCreatedAt
@@ -207,6 +207,12 @@ async function checkOne(
       whalesDetails: bundle.whales.details,
       socialStatus: bundle.social.status,
       socialDetails: bundle.social.details,
+      shakeoutStatus: bundle.shakeout.status,
+      shakeoutDetails: bundle.shakeout.details,
+      higherLowStatus: bundle.higherLow.status,
+      higherLowDetails: bundle.higherLow.details,
+      phase: labels.phase.phase,
+      setupType: labels.setup.setupType,
       greenCount,
     })
     .returning({ id: results.id });
